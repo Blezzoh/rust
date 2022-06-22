@@ -13,7 +13,7 @@ crash course
 #### II Guessing game
 
 1. imports "use std::io" in java this would be "import io from std".
-   Same way on line 10; we could have made this easier by typing importing stdin "use std::io::stdin"
+   Same way on line 16; we could have made this easier by typing importing stdin "use std::io::stdin"
 2. mutable variables: by default variables are immutable in rust, so we used "let mut guess" instead of "let guess" to use a mutable variable
 3. uses the first crate dependency "rand". "rand::Rng" used because of traits that will be defined in section 10 of https://doc.rust-lang.org/book/.
 4. "cmp" compares variables at the left and right and returns "Ordering::<Greater/Lesser/Equal>"
