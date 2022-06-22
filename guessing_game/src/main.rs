@@ -23,12 +23,13 @@ fn main() {
     
         match  guess.cmp(&secret_number) {
             Ordering::Equal => {
-                println!("you win!")
+                println!("you win!");
+                break;
             },
             Ordering::Greater => println!("too big!"),
             Ordering::Less => println!("Too small")
         }
-        println!("the number was: {}", secret_number);
+        // println!("the number was: {}", secret_number);
     }
 
 }
