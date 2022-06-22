@@ -13,6 +13,7 @@ fn main() {
         let mut guess = String::new(); // mutable variable
         // let geuss = String::new(); // this would be unmutable
     
+        //  std::io::stdin
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to Start");
@@ -21,6 +22,7 @@ fn main() {
         
         let guess: u32 = guess.trim().parse().expect("Please type a number!");
     
+        // match is like switch
         match  guess.cmp(&secret_number) {
             Ordering::Equal => {
                 println!("you win!");
