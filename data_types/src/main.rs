@@ -1,4 +1,43 @@
-use std::io;
+// use std::io;
+
+// function no return value
+fn fn_try(){
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {}", y);
+}
+
+fn fn_returns(x: i32) -> i32 {
+    x * x
+}
+// arrays
+fn first_function(){
+    let a = [1, 2, 3, 4, 5];
+
+   // println!("Please enter an array index.");
+
+    // let mut index = String::new();
+
+    // io::stdin()
+    //     .read_line(&mut index)
+    //     .expect("Failed to read line");
+
+    // let index: usize = index
+    //     .trim()
+    //     .parse()
+    //     .expect("Index entered was not a number");
+
+    // let element = a[index];
+
+    // println!(
+    //     "The value of the element at index {} is: {}",
+    //     index, element
+    // );
+    println!("array: {:?}", a);
+}
 
 fn main() {
     let x = 5; // immutable variable
@@ -23,27 +62,10 @@ fn main() {
     let tup: (i32, f64, u8) = (500, 6.4, 1);
     println!("tuple: {:?}", tup);
     /* arrays */
-    let a = [1, 2, 3, 4, 5];
+    first_function();
 
-    println!("Please enter an array index.");
+    /* functions */
+    fn_try();
+    println!("call to function: {}", fn_returns(12));
 
-    let mut index = String::new();
-
-    io::stdin()
-        .read_line(&mut index)
-        .expect("Failed to read line");
-
-    let index: usize = index
-        .trim()
-        .parse()
-        .expect("Index entered was not a number");
-
-    let element = a[index];
-
-    println!(
-        "The value of the element at index {} is: {}",
-        index, element
-    );
-    
-    
 }

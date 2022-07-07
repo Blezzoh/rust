@@ -51,7 +51,13 @@ crash course
      |128-bit |f128 |
      |arch |fsize|
      "size" will use the maximum available capacity.
+   - you cannot mix floats and integers. eg: `12.0 +1`. This will generate a compilation error
    - booleans go by :bool
+   - literal string can be used on multiple lines. eg:
+
+   ````println!("{}", "this is som
+   ething")```
+   - characters are :char
    - has characters
    - tuples:
      eg: `let tup: (i32, f64, u8) = (500, 6.4, 1);`
@@ -60,4 +66,65 @@ crash course
      tuples can have multiple types inside
    - arrays: unlike tuples they can only have one type
 
-3.
+   ````
+
+3. Functions:
+   - functions start with "fn" and the arguments are given a type by adding the ":<type>".
+   - expressions:
+     - expressions can be evaluated to a value; so a function is an expression. A macro is as well.
+     - statements such as "let x = 6;" do not.
+     - expression at the end of a function do not have a semi-colon
+   - functions that return a value have this form:
+     ```
+      fn <name> (arg: <type>, ...) -> <type> {
+      ...
+      <expression>
+      }
+     ```
+4. Comments
+
+- `//this is a comment in rust`
+- `/* This is also a comment */`
+
+5. control flow:
+
+- this is an example of an if block:
+
+```
+ if x<0 {
+        println!("x is a negative number");
+    }
+    else if x==0{
+        println!("x is equal to zero");
+    }
+    else{
+        println!("x is a positive number");
+    }
+```
+
+- you can assign a variable on condition: `let x = if condition {value} else {another_value};`
+- infinite loops uses a statement loop:
+  `loop{...}`
+
+- loops can return a value by using an expression at the end .
+
+eg:
+
+```
+let mut count = 0;
+let value = loop{
+  count += 1;
+  if count ==10 {
+    break count;
+  }
+}
+println!("{}", count);
+```
+
+- while loops have this format `while condition {...}`
+- you can iterate through a collection using "for in". `for element in collection{}`
+- you can iterate n times using a range like listing. `for num in start..end {}`.
+
+#### IV. Understating Ownership
+
+-
