@@ -57,6 +57,7 @@ crash course
 
    ````println!("{}", "this is som
    ething")```
+   ```
    - characters are :char
    - has characters
    - tuples:
