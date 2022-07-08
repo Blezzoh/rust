@@ -65,7 +65,7 @@ crash course
    - tuples:
      eg: `let tup: (i32, f64, u8) = (500, 6.4, 1);`
 
-     printing: `println!(tup);`
+     printing: `println!("{:?}",tup);`
 
      tuples can be destructured: `let (x,y,z) = tup`
 
