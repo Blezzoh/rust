@@ -73,10 +73,6 @@ crash course
 
    - arrays: unlike tuples they can only have one type
 
-   ```
-
-   ```
-
 3. Functions:
    - functions start with "fn" and the arguments are given a type by adding the ":<type>".
    - expressions:
