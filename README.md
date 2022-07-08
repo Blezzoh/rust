@@ -64,9 +64,13 @@ crash course
    - has characters
    - tuples:
      eg: `let tup: (i32, f64, u8) = (500, 6.4, 1);`
+
      printing: `println!(tup);`
+
      tuples can be destructured: `let (x,y,z) = tup`
+
      tuples can have multiple types inside
+
    - arrays: unlike tuples they can only have one type
 
    ```
