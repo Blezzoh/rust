@@ -55,9 +55,11 @@ crash course
    - booleans go by :bool
    - literal string can be used on multiple lines. eg:
 
-   ````println!("{}", "this is som
-   ething")```
    ```
+   println!("{}", "this is som
+   ething")
+   ```
+
    - characters are :char
    - has characters
    - tuples:
@@ -67,7 +69,9 @@ crash course
      tuples can have multiple types inside
    - arrays: unlike tuples they can only have one type
 
-   ````
+   ```
+
+   ```
 
 3. Functions:
    - functions start with "fn" and the arguments are given a type by adding the ":<type>".
