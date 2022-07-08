@@ -127,4 +127,156 @@ println!("{}", count);
 
 #### IV. Understating Ownership
 
--
+##### IV. I. What is Ownership
+
+1. Intro:
+
+- Rust has unique features that can guarrantee users memory safety without needing a garbage collector.
+- this is why it is important to understand how ownership works
+
+2. Definitions:
+
+- Every language has a way to manage memory whether by using a garbage collection or allocating memory.
+  Rust uses a feature that defines memory ownership and if violated the program won't compile. It also doesn't
+  slow down the program.
+- Rust is a systems language and having a value of the heap or stack affect how the language behaves, so that's why you have to make certain decisions.
+- Parts of ownership are defined in relation to the stack or the heap.
+- Stack is a last in, first out. Values pushed to the stack must have a known, and fixed size.
+- Data with an unknown size at compile time or a size that might change must be stored on the heap instead.
+- The heap is less organized and when you put data here, the memory allocator finds an empty spot big enough, marks it as being used, and then returns a pointer.
+- This process is called "allocating on the heap" or just "allocating". Pushing values on the stack is not called "allocating".
+- The pointer to the heap has a known and fixes size. It can then been stored to the stack and be found by using this pointer on the stack.
+- Allocating on the heap takes relatively much more time than on pushing to the stack since the memory allocator has to search which it never does while using the stack.
+- Accessing data in the heap takes again longer because you have to follow a point on the stack. Memory can also do many jumps since it may follow multiple locations instead of just one for accessing the stack.
+
+- when your code call a function, local variables and functions arguments(including pointers to the heap if used), are all pushed to the stack. when a function call finishes those values are popped off.
+- `Keeping track of what parts of code are using which data on the heap, minimizing the amount of duplicate data on the heap, and cleaning unused data so that you don't run out of space are all problems that ownership addresses.`
+
+3. Ownership Rules:
+
+- Each value in Rust has an owner
+- There can only be one owner at a time
+- when the owner goes out of scope, the value will be dropped.
+
+4. Variable Scope:
+
+- Here we will focus on scope material that might different from other languages.
+- The string type is a good example of explaining how values are stored on the heap.
+- We will use "String" type instead of literals because String can be mutated but literals cannot.
+
+```
+{
+  // start of scope
+    let mut s = String::from("hello");
+    s.push_str(", world!");
+    println!("{}", s);
+} //end of scope
+```
+
+- We know the contents at compile time. This is why they are fast and efficient. This property comes from literals immutability.
+- When we use the mutable String, the size is unkown at compile time since it can change size. We have to request the memory allocator at run time.
+- what happens here is that whenever "s" in our example goes out of scope, it is dropped by a special function called "drop". We don't use a garbage collector or memory allocation strategies.
+- This example is simple but it can get complicated when some other parts of the code are using the same variable.
+
+```
+let s = String::from("hello");
+let t = s;
+```
+
+- A string is made of 3 parts under the hood:
+
+```
+1. a pointer to the address it is stored at in heap.
+2. length
+3. capacity
+```
+
+- when we assign "t", a copy of of the pointer, length, and capacity is made but the value is not created again in the heap.
+- if Rust calls drop, there will be a double free error since rust will try to drop "s" and "t" at the same time which can also lead to security vulnerabilities in the code base.
+- In order to ensures that this doesn't happen, "s" becomes invalid after "t" is created.
+
+```
+  let s = String::from("hello");
+  let t =s;
+  // println!("{}", s); // this will print an error
+  // println!("{}",t); // this will work
+```
+
+- This process of invalidating "s" is called a move(works like a shallow copy but also invalidate the previous value).
+
+- if we wanted to keep both, we have to make a clone.
+
+```
+  let s = String::from("hello");
+  let t =s.clone();
+  // println!("{}", s); // this will work
+  // println!("{}",t); // this will work as well
+```
+
+- Rust doesn't do an automatic deep copy, it must be called by the user. It is relatively more expensive than a "move".
+
+5. Stack-Only data
+
+- literalls that have a known fixed size are stored on the stack and they don't make a move like for example the "String" variables above.
+
+```
+// both "s" and "t" are stack variables and are both valid
+let s =5;
+let t = s;
+```
+
+- No need to make a clone in the example above if we wanted to keep both variables. They implement a copy of their own.
+
+- Types that that don't need a clone: `All integers types, Boolean type, floats, character type, and tuples tof types that have their own Copy.`
+
+6. Ownership and Functions
+
+- ownership while passing a value to a function follow the same rules of copying or moving. When a variable is a stack variable it is moved, and when a variable is heap variable, it is copied.
+
+```
+{
+  let s = String::from("hello");
+  takes_ownership(s); /* the function moves the variable, and the variable is out of scope after this call*/
+  let t = 5;
+  makes_a_copy(t); /* the variable is copied by the function, and it will still be in scope after the function call*/
+
+
+}
+```
+
+7. Return Values and Ownership
+
+- Returning values can also transfer ownership. Next example the return value ownership into s1.
+
+```
+fn gives_ownership(){
+  let s = String::from("hello");
+  s // return value
+}
+
+fn main(){
+  let s1 = gives_ownership();
+}
+
+```
+
+- Next example shows 2 movement of ownership
+
+```
+fn main(){
+  let s2 = String::from("hello"); // s2 comes in scope
+  let s3 = takes_and_gives_ownership(s2); /* s2 goes out of scope by moving it to the function, and function return moves the ownership to s3.
+}
+
+fn takes_and_gives_ownership(x:String){
+  x
+}
+```
+
+- functions can have multiple return values in form of tuple where users can move ownership to their own variables.
+
+```
+fn takes_and_gives_ownership(x:String){
+  (x, s.len())
+}
+```
