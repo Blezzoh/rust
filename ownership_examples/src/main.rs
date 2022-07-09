@@ -44,7 +44,29 @@ fn main() {
         println!("string '{}' of length {}", s3, len);
 
     }
+    {
+        // borrowing ownership by passing in a reference
+        let s1 = String::from("hello");
+        let len = borrows_ownership(&s1);
+        println!("string '{}' of length {}", s1, len);
+
+    }
+    {
+         let mut s1 = String::from("hello");
+         println!("original '{}'", s1);
+         borrows_and_mutates(&mut s1);
+         println!("mutated reference '{}'", s1);
+    }
+    {
+        // string slice
+        let mut s = String::from("hello world");
+        let part1 = &s[0..5];
+        let part2 = &s[6..11];
+        println!("{} {}", part1, part2);
+    }
+
 }
+
 
 fn makes_a_copy(x:isize){
     println!("copied {}", x);
@@ -59,3 +81,13 @@ fn str_len(x:String)->(String, usize){
   
   (x, size)
 }
+
+/* referencing and borrowing */
+fn borrows_ownership(x: &String) -> usize{
+  x.len()
+}
+
+fn borrows_and_mutates(x: &mut String){
+  x.push_str(", world");
+}
+
