@@ -59,10 +59,22 @@ fn main() {
     }
     {
         // string slice
-        let mut s = String::from("hello world");
+        let s = String::from("hello world");
         let part1 = &s[0..5];
         let part2 = &s[6..11];
         println!("{} {}", part1, part2);
+    }
+    {
+        let mut s = String::from("hello world");
+        let word = get_first_world(&s); // 1 borrow of &s as immutable
+        // s.clear(); // 2nd borrow of &s as mutable  will cause
+        println!("first word is {}", word);
+        /* This is bad code because we don't need to use mutable "s" but it is for the sake of an example */
+    }
+    {
+        let a =[1,2,3,4,5];
+        let slice = &a[1..3];
+        assert_eq!(slice, &[2,3]);
     }
 
 }
@@ -89,5 +101,15 @@ fn borrows_ownership(x: &String) -> usize{
 
 fn borrows_and_mutates(x: &mut String){
   x.push_str(", world");
+}
+
+fn get_first_world(s: &str) -> &str{
+    let bytes = s.as_bytes();
+    for(i, &item) in bytes.iter().enumerate(){
+        if item == b' '{
+            return &s[..i];
+        }
+    }
+    &s[..]
 }
 

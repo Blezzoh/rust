@@ -391,4 +391,45 @@ fn no_dangle() -> String {
 
 ##### 4. 3. The Slice Type
 
-- a string slice is part of a string that looks like `let part = &string_example[num1....num2]`
+- a string slice is part of a string that looks like `let part = &string_example[num1..num2]`
+- if the first part of the slice start at zero you can drop the zero: `let part = &string_ex[..num2] `
+- We cannot use a mutable and immutable borrow at the same time. so a call like this will cause an error
+
+```
+fn main(){
+  let mut s = String::from("hello world");
+  let word = get_first_world(&s); // 1 borrow of &s as immutable
+  s.clear(); // 2nd borrow of &s as mutable  will cause
+  println!("first word is {}", word);
+}
+fn get_first_world(s: &String) -> &str{
+    let bytes = s.as_bytes();
+    for(i, &item) in bytes.iter().enumerate(){
+        if item == b' '{
+            return &s[..i];
+        }
+    }
+    &s[..]
+}
+```
+
+- string literals have a type &str are also slices. `let s = "hello"`.
+- this last point also leads to a conclusion that the two signatures of "get_first_word" can be used interchangably.
+
+```
+fn get_first_world(s: &str) -> &str{}
+fn get_first_world(s: &String) -> &str{}
+```
+
+- The first one is a better one because it can be used for both "&String" and "&str" types.
+- Other slices include arrays
+
+```
+let a = [1,2,3];
+let slice = &s[..1]
+```
+
+##### 4. 4. Summary
+
+- The concept of ownership, borrowing, and slices ensure memory safety in Rust at compile time.
+- Rust gives you control over your memory usage as other systems language, but having an owner of data automatically cleans up the data when out of scope.
