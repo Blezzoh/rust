@@ -391,6 +391,7 @@ fn no_dangle() -> String {
 
 ##### 4. 3. The Slice Type
 
+- slices let the user reference a sequence elements in a colleciton rather than the whole collection.
 - a string slice is part of a string that looks like `let part = &string_example[num1..num2]`
 - if the first part of the slice start at zero you can drop the zero: `let part = &string_ex[..num2] `
 - We cannot use a mutable and immutable borrow at the same time. so a call like this will cause an error
