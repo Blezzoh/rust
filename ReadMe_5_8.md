@@ -104,3 +104,17 @@ let origin = Point(0,0,0);
   username: "user1",
   };
   ```
+
+##### 5. 2. Methods
+
+- Methods are like functions but defined in the context of a struct.
+- defining a method starts with the word `impl`.
+- When we want to pass in the structure in question as the **first** parameter, we use the notation `&self` in the parameter.
+  Whatever happen here we don't mutate the the struct itself.
+- If we want to mutate we use a mutable reference `&mut self`
+- we start the function inside the `impl <struct_name>{}` with self.
+- we can define more than one function inside here
+- we can have multiple `impl` block as well of the same struct.
+- **Associated functions**: These can be methods or functions that are associated with the structure in question and are called using `<structname>::<method>`. More in chapter 7.
+- Associated functions that aren't methods are often use as constructors that will return a new instance of the struct.
+- They are called assosciated functions because they don't need self as the first parameter.
