@@ -196,9 +196,57 @@ fn value_in_cents(coin: &Coin) -> u8 {
 - Crates can be either binary crates or library crates
 - Binary crates are programs can be compiled to an executable. They contain a main function
 - Library crates are not executable and don't contain a main. Instead, they contain functionality intended to be shared across multiple projects.
+- library vs binary crates
+  - `cargo new <name>` creates a new package that contains a binary crate with `main.rs` as the entry point.
+  - `cargo new --lib <name>` creates a new library crate that contains `lib.rs` as the entry point.
+  - if you have `main.rs` and `lib.rs` then your package will have both a library and a binary crate after compilation.
 
 ##### 7.2 Defining modules to control scope and privacy
 
 - `use` brings path into scope
 - `pub` makes items public
--
+- `mod` is used to declare a module
+- `mod my_module;` with a semicolon implies that there is going to be a file `my_module.rs` in that directory.
+
+```
+mod my_module{
+    mod another;
+}
+```
+
+- the writing above implies that there is going to be either `my_module/another.rs` or `my_module/mod.rs` in that folder. both works
+- module can also contain struct, traits, ...
+
+# Note on Path
+
+- while using `use` to bring some function into scope, it is idiomatic that we use up to the parent of the module instead of using the function into path.
+  - not recommended: `use crate module::function`
+  - recommended: `use crate::module`
+- in case of structs, enums, and other items, it is idiomatic to use the full path
+  - recommended: `use crate::module::struct`
+  - special case: when there are items of the same name in different module, then we can stop at the parent of each.
+  ```
+      use crate::soccer;
+      use crate::plan;
+      ...
+      fn x() -> plan::Goal{}
+      fn y() -> soccer::Goal{}
+  ```
+- re-exporting: if we import some module in a crate and later want to export some functionality of that crate in the new module/function. Then we use `pub use`.
+- Path Clean up: instead of having multiple `use` statement from the same module, we can add curly braces and import in one line.
+
+```
+use std::{cmp::Ordering, io};
+// vs
+use std::io;
+use std::cmp::Ordering;
+```
+
+- `use std::{self, Write}` is the same as using:
+
+```
+use std::io;
+use std::io::Write;
+```
+
+- To make import everything in the module, we can use the wildcard notation `*`. Eg: `use std::io::*`
