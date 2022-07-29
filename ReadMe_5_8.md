@@ -249,4 +249,32 @@ use std::io;
 use std::io::Write;
 ```
 
-- To make import everything in the module, we can use the wildcard notation `*`. Eg: `use std::io::*`
+- To make import everything in the module, we can use the wildcard notation `*`. Eg: `use std::io::*`.
+
+#### VIII. Common Collections
+
+Collections includes a number data structuctures. This chapter will talk about vectors(different to tuples and arrays since it is stores on the heap), string, and hash maps.
+More here: [Collections](https://doc.rust-lang.org/std/collections/index.html)
+
+###### 8.1. Vectors
+
+- They store values of the same type.
+- stored on the heap
+- creating one: `let v:Vec<i32>`. Writen to be generic to a type Vec<T>.
+- Can also be created using macro `vec!`. Eg: `let v = vec![1,2]`.
+- Adding: `v.push(2);`.
+- Droped when it goes out of scope
+
+#### IX. About Error Handling
+
+- 2 ways you can use:
+  - "panic!" macro that tells the program to halt with a specific error. eg: `panic!("just panic!")`
+  - Enum Result:
+    ```
+    enum Result<T,E>{
+        Ok(T),
+        Err(E)
+    }
+    ```
+  - `Result<T,E>` is commonly used and better way to handle know errors that might occur during execution such as bad user input, error in reading a file, etc
+- Example in `common_collections` folder.
