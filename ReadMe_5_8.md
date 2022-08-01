@@ -276,5 +276,14 @@ More here: [Collections](https://doc.rust-lang.org/std/collections/index.html)
         Err(E)
     }
     ```
-  - `Result<T,E>` is commonly used and better way to handle know errors that might occur during execution such as bad user input, error in reading a file, etc
+  - `Result<T,E>` is commonly used and better way to handle know errors that might occur during execution such as bad user input, error in reading a file, etc.
+  - `expect` and `unwrap` are very useful while prototyping to see how you are going to handle a particular error.
 - Example in `common_collections` folder.
+
+#### X. Generic Types, Traits, and Error Handling
+
+##### 10.1. Generic Types
+
+- `<T>`, or `<Type>`: this concept is very familiar
+- `<T, U, X,..>` if you wanted to use more in one function for example
+- Can use traits that will be defined later.
