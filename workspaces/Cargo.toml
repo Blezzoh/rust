@@ -1,0 +1,7 @@
+[workspace]
+
+members = [
+    "add_one",
+    "substract_one",
+    "runner",
+]
